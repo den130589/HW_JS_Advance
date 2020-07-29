@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>ITEA-JS ADVANCED - LESSON 2: CLASSWORK 2</title>
+  <link rel="stylesheet" href="css/style.min.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="testBlock hover">
+      <button class="iButton" id="mouseHover">1. Hover!</button>
+      <ul id="hoverResult" class="resultBlock">
+        <li class="red">Hovered!</li>
+        <li class="blue">Hovered!</li>
+        <li class="green">Hovered!</li>
+        <li class="orange">Hovered!</li>
+        <li class="purple">Hovered!</li>
+      </ul>
+    </div>
+
+    <div class="testBlock click">
+      <button class="iButton" id="mouseClick">2. Click for do things</button>
+      <div id="clickResult" class="resultBlock one two three four five six"></div>
+    </div>
+
+    <div class="testBlock random">
+      <button class="iButton" id="mouseLight">3. Click for turn on lights</button>
+      <div id="lightResult" class="resultBlock"></div>
+    </div>
+
+    <div class="testBlock keyboard">
+      <button class="iButton" id="keyboardButton">4. Press any key</button>
+      <div id="keyboardResult" class="resultBlock key-colors"></div>
+    </div>
+
+  </div>
+
+  <script>
+    /*
+
+      Поработаем немного с ивентами:
+      onmouseenter
+      onclick
+      oncontextmenu
+      onkeydown
+
+      Задание:
+      На каждую из конопок назначить действие которое будет выполнять следующее действие:
+      1.На ховер(onmouseenter) повесить обработчик который будет при каждом наведении
+        на кнопку будет выводить в блок результатом елемент li с текстом "hovered!"
+        у которого будет один из следующих класов:
+        red blue green orange purple
+
+
+      
+
+      2.На кнопку клика(onclick) повесить обработчик который будет удалять классы с
+        блока с результатом по очереди в таком порядке:
+
+        six > two > three > four > one > five
+
+        после того как блок окажется пустым, добавить их в порядке возрастания
+
+        one > two > three ... > six
+
+      3. На кнопку клика (Light) повесить обработчик, который будет выводить в 
+      блок с результатом (lightResult) поочередно один из цветов светофора:
+      Цикл: Off -> Red -> Yellow -> Green -> Off
+
+      4. На кнопку с обработчиком нажатия (onkeydown) повесить обработчик который будет:
+
+        - Выводить в блок с результатом(keyboardResult) число нажатий на любую из клавиш клавиатуры.
+        - Давать блоку (keyboardResult) классы, которые соотсветствуют числу кликов:
+
+        Н-р:
+        1 -> one
+        3 -> three
+        5 -> five
+        11 -> one one
+        115 -> one one five
+
+
+
+    */
+
+    var mouseHover = document.getElementById('mouseHover');
+    var mouseClick = document.getElementById('mouseClick');
+    var mouseLight = document.getElementById('mouseLight');
+    var keyboardButton = document.getElementById('keyboardButton');
+
+    mouseHover.onmouseenter = function(){
+      function getRandomIntInclusive(min, max) {
+          min = Math.ceil(min);
+          max = Math.floor(max);
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+      };
+
+      var randomNum = getRandomIntInclusive(1, 5);
+
+      var hoverRes = document.getElementById('hoverResult');
+
+      var getAllLi = hoverRes.querySelectorAll('li');
+      getAllLi.forEach(function(getAllLi) {
+        getAllLi.style.display = 'none';
+      });
+
+      
+      getAllLi.forEach(function (getAllLi) {
+          var liRed = document.querySelector('.red');
+          var liBlue = document.querySelector('.blue');
+          var liGreen = document.querySelector('.green');
+          var liOrange = document.querySelector('.orange');
+          var liPurple = document.querySelector('.purple');
+
+          if (randomNum == 1) {
+            liRed.style.display = 'block';
+          } else if (randomNum == 2) {
+            liBlue.style.display = 'block';
+          } else if (randomNum == 3) {
+            liGreen.style.display = 'block';
+          } else if (randomNum == 4) {
+            liOrange.style.display = 'block';
+          } else {
+            liPurple.style.display = 'block';
+          }    
+      }); 
+    }
+
+
+    //Task2
+    var clickIndex = 0;
+    var direction = true;
+
+    var clickRes = document.getElementById('clickResult');
+    var classContains = clickRes.classList;
+    
+    mouseClick.onclick = function(){
+      for (i = 1; i <= 1; i++ ) {
+        clickIndex += i;
+      };
+
+      if (clickIndex == 1) {
+        clickRes.classList.remove('six');
+                    
+      } else if (clickIndex == 2) {
+         clickRes.classList.remove('two');
+                      
+      } else if (clickIndex == 3) {
+        clickRes.classList.remove('three');
+                      
+      } else if (clickIndex == 4) {
+        clickRes.classList.remove('four');
+                      
+      } else if (clickIndex == 5) {
+        clickRes.classList.remove('one');
+                      
+      } else if (clickIndex == 6) {
+        clickRes.classList.remove('five');
+                      
+      } else if (clickIndex == 7) {
+        clickRes.classList.add('one');
+                      
+      } else if (clickIndex == 8) {
+        clickRes.classList.add('two');
+                      
+      } else if (clickIndex == 9) {
+        clickRes.classList.add('three');
+                      
+      } else if (clickIndex == 10) {
+        clickRes.classList.add('four');
+                      
+      } else if (clickIndex == 11) {
+        clickRes.classList.add('five');
+                      
+      } else if (clickIndex == 12) {
+        clickRes.classList.add('six');
+                      
+      } else {
+        alert ('Код выполнен!')
+      }
+      
+    }
+    
+
+    //Task3
+
+    var blockRes = document.getElementById('lightResult');
+
+    var classListBlockRes = blockRes.classList;
+
+    mouseLight.onclick = function(e){
+
+        if (classListBlockRes.contains('red') != true) {
+          classListBlockRes.add('red');
+
+
+        } else if (classListBlockRes.contains('yellow') != true) {
+          classListBlockRes.add('yellow');
+
+
+        } else if (classListBlockRes.contains('green') != true) {
+          classListBlockRes.add('green');
+
+
+        } else if (classListBlockRes.contains('green') == true && classListBlockRes.contains('red') == true && classListBlockRes.contains('yellow') == true) {
+          classListBlockRes.remove('green');
+          classListBlockRes.remove('red');
+          classListBlockRes.remove('yellow');
+        }
+        
+    }
+
+
+
+    //task4
+    var counter = 0;
+    keyboardButton.onkeydown = function(e){
+      var keyboardResult = document.getElementById('keyboardResult');
+        // for (i = 0; i <= 1; i++) {
+        //   counter += i;
+        // };
+        
+        
+
+    function NumToStr(n) {
+          if (n == 1) {
+            return 'one';
+          } else if (n == 2) {
+            return 'two'
+          } else if (n == 3) {
+            return 'three'
+          } else if (n == 4) {
+            return 'four'
+          } else if (n == 5) {
+            return 'five'
+          } else if (n == 6) {
+            return 'six'
+          } else if (n == 7) {
+            return 'seven'
+          } else if (n == 8) {
+            return 'eigth'
+          } else if (n == 9) {
+            return 'nine'
+          } else if (n == 0) {
+            return 'zero'
+            
+          } else if (n == undefined) {
+            return '';
+          }
+    };
+
+    
+    counter ++
+    
+    var arr = String(counter).split('');
+    
+    var test1;
+    var test2;
+    var test3;
+    
+    test1= arr[0];
+    test2 = arr[1]
+    test3 = arr[2] 
+    
+    var arrNum;
+
+    arrNum = [NumToStr(test1), NumToStr(test2), NumToStr(test3)];
+    
+    console.log(arrNum)
+    console.log(test1)
+    console.log(test2)
+    
+    keyboardResult.classList.remove('one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eigth', 'nine', 'zero', 'undefined'); 
+    
+    keyboardResult.classList.add(arrNum[0]);
+    if (counter >= 10) {
+      keyboardResult.classList.add(arrNum[1]);
+    } 
+    if (counter >= 100) {
+      keyboardResult.classList.add(arrNum[2]);
+    }
+    keyboardResult.innerHTML = arrNum[0] + ' ' + arrNum[1] + ' ' + arrNum[2]; 
+    }
+     
+     
+    
+      
+
+    
+      
+      
+      
+    
+  </script>
+</body>
+</html>
