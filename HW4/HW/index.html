@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    input {
+        margin-bottom: 20px;
+    }
+    .ok {
+        border: 1px solid green;
+    }
+</style>
+<body>
+    <form action="#" name="yourForm">
+
+        <input type="text" name="name" required minlength ="2"> Имя <br> 
+        <input type="email" name="email" id="email" required minlength="3"> Почта <br>
+        <input type="password" name="pass" id="pass" required minlength="8" maxlength="16"> Пароль <br>
+        <input type="number" name="num" id="num" required minlength="1"> Колличество сьеденых яблок <br>
+        <input type="text" name="s" id="s" required> Напиши спасибо за яблоки <br>
+        <input type="checkbox" name="checkbox" id="checkbox" required> Согласен на обучение <br>
+        <button id="submit"> Отправить </button> <br>
+        <button id="chek">Проверить данные</button>
+    </form>
+    <script>
+        var btnChek = document.getElementById('chek');
+        var submit = document.getElementById('submit');
+        var element = document.forms.yourForm.elements;
+
+        function reportValidity () {
+            
+            if (element.name.validity.tooShort) {
+                element.name.setCustomValidity('Как тебя зовут дружище?!')
+            } else {
+                element.name.setCustomValidity('')
+                element.name.classList.add('ok');
+            }
+
+            if (element.email.validity.typeMismatch) {
+                element.email.setCustomValidity('Ну и зря, не получишь бандероль с яблоками!')
+            } else {
+                element.email.setCustomValidity('')
+                element.email.classList.add('ok');
+            }
+
+            if (element.pass.validity.tooShort) {
+                element.pass.setCustomValidity('Я никому не скажу наш секрет')
+            } else {
+                element.pass.setCustomValidity('')
+                element.pass.classList.add('ok');
+            }
+
+            if (element.num.value < 1) {
+                element.num.setCustomValidity('Ну хоть покушай немного... Яблочки вкусные')
+            } else {
+                element.num.setCustomValidity('')
+                element.num.classList.add('ok');
+            }
+
+            if (element.s.value !== 'спасибо') {
+                element.s.setCustomValidity('Фу, неблагодарный(-ая)!')
+            } else {
+                element.s.setCustomValidity('')
+                element.s.classList.add('ok');
+            }
+
+            if (element.checkbox.checked !== true) {
+                element.checkbox.setCustomValidity('Необразованные живут дольше! Хорошо подумай!')
+            } else {
+                element.checkbox.setCustomValidity('')
+                element.checkbox.classList.add('ok');
+            }
+            
+        }
+        submit.addEventListener('click', reportValidity)
+
+        chek.addEventListener('click', function() {
+            var t = document.forms.yourForm.reportValidity();
+            if (t !== false) {
+                alert('Все поля заполнены правильно')
+            } else {
+                alert('Поля формы заполнены неправильно или пустые')
+            }
+        })
+    </script>
+</body>
+</html>
