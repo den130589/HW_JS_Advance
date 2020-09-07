@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Forms Task 1</title>
+  <script>
+    /*
+      Задание:
+        Сделать валидацию формы:
+        1. Логин / Пароль не может быть пустым
+        2. то поле, которое не прошло валидацию подсвечивать красным, которое прошло - подсвечивать зеленым.
+        3. Пока не стоит что юзер согласен с лиц. соглашением - кнопка отправки не активна
+    */
+  </script>
+</head>
+<body>
+  <form id="MyValidateForm">
+    <input type="text"  id="login" name='login' placeholder="Ваш логин" />
+    <input type="password" id="pas1"  name='pas1' placeholder="Ваш пароль" />
+    <input type="password" id="pas2"  name='pas2' placeholder="Повторите пароль" />
+    <label for="agree">
+      <span>Вы согласны с лицензионым соглашением.</span>
+      <input type="checkbox" id="agree" />
+    </label>
+    <input type="submit" id="submit" value="Отправить" disabled/>
+  </form>
+
+  <style>
+    #MyValidateForm{
+      width: 350px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #MyValidateForm input{
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      padding: 10px 20px;
+    }
+    .error{
+        border: 1px solid red;
+    }
+    .OK{
+        border: 1px solid green;
+    }
+  </style>
+
+  <script>
+      let form = document.getElementById('MyValidateForm')
+      let log = document.getElementById('login'); 
+      let pas1 = document.getElementById('pas1'); 
+      let pas2 = document.getElementById('pas2');
+      let chek = document.getElementById('agree');
+      let submit = document.getElementById('submit');
+
+      form.addEventListener('input', function() {
+         if (log.value.length > 0 && pas1.value.length > 0 && pas2.value.length > 0 && pas1 === pas2) {
+             submit.removeAttribute('disabled');
+         }
+         
+         
+      })
+
+      
+  </script>
+</body>
+</html>
